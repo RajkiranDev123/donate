@@ -38,7 +38,7 @@ function App() {
 
       //interact with rp server
       const paymentObject = new window.Razorpay({
-        key: "rzp_test_07DmaNas5HROpO",
+        key: import.meta.VITE_RPKEY,
         order_id: data.order.id,
         ...data.order,
 
