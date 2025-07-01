@@ -19,7 +19,7 @@ app.use(cors())
 
 app.use("/api",router)
 app.use("/api/amt",amountRouter)
-app.use("/api/donation",amountRouter)
+app.use("/api/donation",donationRouter)
 
 
 

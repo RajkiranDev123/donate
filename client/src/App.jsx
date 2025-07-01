@@ -25,38 +25,41 @@ function App() {
     })
   }
 
-  const onPayment = async (price, itemName) => {
+  const onPayment = async (price, donationId, name) => {
     try {
       const options = {
-        order_id: 1,
+
         amount: price
       }
 
-      const res = await axios.post("http://localhost:3000/api/createOrder", options)
+      const res = await axios.post(`${import.meta.env.VITE_B_URL}/api/createOrder`, options)
       const data = res.data
-      console.log("data==>", data)
+
 
       //interact with rp server
       const paymentObject = new window.Razorpay({
-        key: import.meta.VITE_RPKEY,
+        key: import.meta.env.VITE_RPKEY,
         order_id: data.order.id,
         ...data.order,
 
         //after success
         handler: async function (res) {
-          console.log("handler res==>", res)
+
 
           const options2 = {
-            order_id: res.razorpay_order_id,
-            payment_id: res.razorpay_payment_id,
-            signature: res.razorpay_signature,
+            order_id: res?.razorpay_order_id,
+            payment_id: res?.razorpay_payment_id,
+            signature: res?.razorpay_signature,
+            donationId:donationId,
+            name:name,
+            amount:price
           }
-          await axios.post("http://localhost:3000/api/verifyPayment", options2).then(res => {
-            console.log(res.data)
+          await axios.post(`${import.meta.env.VITE_B_URL}/api/verifyPayment`, options2).then(res => {
+            console.log("res ofter final verification==>", res)
             if (res.data.success) {
-              alert("suc")
+              alert("Payment success!")
             } else {
-              alert("fai")
+              alert("Payment failed!")
             }
           }).catch(e => console.log(e))
         }
@@ -81,7 +84,7 @@ function App() {
           background: "linear-gradient(to right, #283048, #859398)", width: "100vw", height: "100vh", display: "flex",
           justifyContent: "center", alignItems: ""
         }} >
-        <Donate  onPayment={onPayment} />
+        <Donate onPayment={onPayment} />
 
 
       </div>

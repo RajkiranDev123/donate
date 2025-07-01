@@ -1,5 +1,7 @@
 import { createRazorpayInstance } from "../config/razorPay.js"
 import crypto from "crypto"
+import { DonationModel } from "../models/donationSchema.js"
+
 
 const razorpayInstance = createRazorpayInstance()
 
@@ -34,22 +36,29 @@ export const createOrder = (req, res) => {
 }
 
 
-export const verifyPayment = (req, res) => {
+export const verifyPayment = async (req, res) => {
 
-    const { dId, payment_id, signature } = req.body
+    const { order_id, payment_id, signature, amount, donationId, name } = req.body
 
     const secret = process.env.RAZORPAY_KEY_SECRET
     const hmac = crypto.createHmac("sha256", secret)
 
-    hmac.update(dId + "|" + payment_id)
+    hmac.update(order_id + "|" + payment_id)
 
     const generatedSignature = hmac.digest("hex")
 
     if (generatedSignature == signature) {
-        // do db operations etc
+
+        const donations = new DonationModel({
+            amount, donationId, name
+        })
+
+        await donations.save()
+
         return res.status(200).json({
             success: true,
-            message: "Payment Verified!"
+            message: "Payment Verified!",
+            donations
         })
     } else {
         return res.status(400).json({
@@ -58,25 +67,4 @@ export const verifyPayment = (req, res) => {
         })
     }
 
-
-
-
-    try {
-
-        razorpayInstance.orders.create(options, (err, order) => {
-            if (err) {
-                return res.status(500).json({
-                    success: false, message: "Payment Failed1!"
-                })
-            }
-            res.status(200).json({
-                success: true, order
-            })
-        })
-
-    } catch (error) {
-        return res.status(500).json({
-            success: false, message: "Payment Failed2!"
-        })
-    }
 }

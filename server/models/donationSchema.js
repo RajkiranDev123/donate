@@ -1,24 +1,27 @@
 import mongoose from "mongoose";
-import validator from "validator"
 
-const usersSchema = new mongoose.Schema({
-    fname: {
+
+const donationSchema = new mongoose.Schema({
+    name: {
         type: String,
         required: true,
         trim: true
     },
 
-    mobile: {
+    donationId: {
         type: String,
         required: true,
-        trim: true,
-        unique: true,
-        minlength: 10,
-        maxlength: 10
+        trim: true
+    },
+
+    amount: {
+        type: String,
+        required: true,
+        trim: true
     },
 
 
 }, { timestamps: true })
 ////////////model name
-export const AmountModel = new mongoose.model("amount", amountSchema)
+export const DonationModel = new mongoose.model("don", donationSchema)
 //////////////////////////////////////// collection name
