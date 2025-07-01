@@ -7,6 +7,10 @@ import './App.css'
 
 function App() {
 
+  const [name, setName] = useState("")
+
+
+
   const loadScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement("script")
@@ -30,7 +34,7 @@ function App() {
 
       const res = await axios.post("http://localhost:3000/api/createOrder", options)
       const data = res.data
-      console.log("data==>",data)
+      console.log("data==>", data)
 
       //interact with rp server
       const paymentObject = new window.Razorpay({
@@ -72,9 +76,14 @@ function App() {
 
   return (
     <>
-      <div>
-        <p>Please Donate! I AM HUNGRY!</p>
-        <Donate onPayment={onPayment} />
+      <div
+        style={{
+          background: "linear-gradient(to right, #283048, #859398)", width: "100vw", height: "100vh", display: "flex",
+          justifyContent: "center", alignItems: ""
+        }} >
+        <Donate  onPayment={onPayment} />
+
+
       </div>
     </>
   )
