@@ -6,6 +6,8 @@ import axios from "axios"
 
 const Donate = ({ onPayment }) => {
   const [amounts, setAmounts] = useState([])
+  const [donationId, setDonationId] = useState("")
+
   const [donations, getAllDonations] = useState([])
 
   const [name, setName] = useState("")
@@ -18,6 +20,8 @@ const Donate = ({ onPayment }) => {
       .then(response => {
 
         setAmounts(response?.data?.amt)
+        setDonationId(response?.data?.donationId)
+
       })
       .catch(error => {
 
@@ -46,12 +50,14 @@ const Donate = ({ onPayment }) => {
           <img width={200} height={200} style={{ borderRadius: 5 }} src='/beg.png' alt='beg' />
         </div>
         <div style={{ textAlign: "center" }}>
-          <p style={{ color: "white", fontFamily: "arial" }}>{name}</p>
-          <p style={{ color: "white", fontSize: 9, fontFamily: "monospace" }}>Name is must!</p>
+         {name&& <p style={{ color: "white", fontFamily: "arial" }}>hi, {name}</p>}
+          <p style={{ color: "white", fontSize: 11, fontFamily: "monospace" }}>Name is must!</p>
 
           <input placeholder='Your name...' type='text' style={{ outline: "none", padding: 3, borderRadius: 3 }} onChange={(e) => setName(e.target.value)} />
         </div>
         <p style={{ fontFamily: "monospace", textAlign: "center", color: "wheat" }}>Select Amount to pay : </p>
+        <p style={{ fontFamily: "monospace", textAlign: "center", color: "white",fontStyle:"italic" }}>Your donation Id : {donationId} </p>
+
         {
           amounts && amounts.map(e => {
             return <>
