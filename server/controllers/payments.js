@@ -42,7 +42,7 @@ export const createOrder = (req, res) => {
 
 
 
-// it wont hit rp
+// it wont hit rp server!
 // only for db purpose
 export const verifyPayment = async (req, res) => {
 
