@@ -7,7 +7,7 @@ export const getAmounts = (req, res) => {
 
     try {
         return res.status(200).json({
-            success: true, amt: [20, 30, 100], donationId: "dId" + randomNumber
+            success: true, amt: [20, 30,40, 100], donationId: "dId" + randomNumber,randomNumber
         })
     } catch (error) {
         return res.status(500).json({
