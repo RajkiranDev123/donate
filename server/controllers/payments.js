@@ -5,10 +5,15 @@ import { DonationModel } from "../models/donationSchema.js"
 
 const razorpayInstance = createRazorpayInstance()
 
+// creating order is first step in payment and order contains details like amt and currency!
+// it will return order_id &  order_id secures the payment and cant be tampered!
 export const createOrder = (req, res) => {
 
-    const { order_id, amount } = req.body
-    // console.log(order_id,amount)
+    const { donation_id, amount } = req.body
+
+    //db
+    // use order_id or product_id or donation_id to fetch amount from db based on it
+
     const options = {
         amount: amount * 100,
         currency: "INR",
@@ -19,33 +24,43 @@ export const createOrder = (req, res) => {
         razorpayInstance.orders.create(options, (err, order) => {
             if (err) {
                 return res.status(500).json({
-                    success: false, message: "Payment Failed1!"
+                    success: false, message: "Payment Failed! Order creation failed!"
                 })
             }
-            // console.log("order==>",order)
-            res.status(200).json({
+
+            return res.status(200).json({
                 success: true, order
             })
         })
 
     } catch (error) {
         return res.status(500).json({
-            success: false, message: "Payment Failed2!"
+            success: false, message: "Payment Failed! or order creation failed!"
         })
     }
 }
 
 
+
+// it wont hit rp
+// only for db purpose
 export const verifyPayment = async (req, res) => {
 
     const { order_id, payment_id, signature, amount, donationId, name } = req.body
+    ///////     from rp          ///////////        
 
     const secret = process.env.RAZORPAY_KEY_SECRET
-    const hmac = crypto.createHmac("sha256", secret)
+
+    // hmac combines (crypographic hash function like sha256) with a (secret key) to create unique message/signature
+    const hmac = crypto.createHmac("sha256", secret) // hmac object
+    
 
     hmac.update(order_id + "|" + payment_id)
 
-    const generatedSignature = hmac.digest("hex")
+    const generatedSignature = hmac.digest("hex") // hex : uses 16 symbols : 0-9 (10 symbols) A-F (6 symbols) A is 10 F is 15
+    //digest : is a fixed length numerical representation of data, created by a cryptographic hash function
+
+    //generated sign= order_id + hmac object + payment_id
 
     if (generatedSignature == signature) {
 
@@ -61,7 +76,7 @@ export const verifyPayment = async (req, res) => {
             donations
         })
     } else {
-        return res.status(400).json({
+        return res.status(500).json({
             success: false,
             message: "Payment not Verified!"
         })

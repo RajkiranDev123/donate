@@ -1,18 +1,10 @@
 import { DonationModel } from "../models/donationSchema.js"
-
-
-
-export const getAllDonations =async (req, res) => {
-     
+export const getAllDonations = async (req, res) => {
     try {
-
-        const dons=await DonationModel.find()
-
-
-        res.status(200).json({
+        const dons = await DonationModel.find()
+        return res.status(200).json({
             success: true, donations: dons
         })
-
 
     } catch (error) {
         return res.status(500).json({
