@@ -51,16 +51,13 @@ export const verifyPayment = async (req, res) => {
 
     const secret = process.env.RAZORPAY_KEY_SECRET
 
-    // hmac combines (crypographic hash function like sha256) with a (secret key) to create unique message/signature
+    // hmac combines (crypographic hash function : sha256) with a (secret key) to create unique message/signature
     const hmac = crypto.createHmac("sha256", secret) // hmac object
-    
-
     hmac.update(order_id + "|" + payment_id)
-
     const generatedSignature = hmac.digest("hex") // hex : uses 16 symbols : 0-9 (10 symbols) A-F (6 symbols) A is 10 F is 15
     //digest : is a fixed length numerical representation of data, created by a cryptographic hash function
 
-    //generated sign= order_id + hmac object + payment_id
+    //generated signature = order_id + hmac object + payment_id
 
     if (generatedSignature == signature) {
 
