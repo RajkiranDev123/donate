@@ -1,6 +1,7 @@
 
 import { useEffect, useState } from 'react'
 import axios from "axios"
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 
 const Donate = ({ onPayment }) => {
   const [amounts, setAmounts] = useState([])
@@ -58,11 +59,27 @@ const Donate = ({ onPayment }) => {
           {name && <p style={{ color: "white", fontFamily: "arial" }}>hi, {name}</p>}
           <p style={{ color: "white", fontSize: 11, fontFamily: "monospace" }}>Name is must!</p>
           <p style={{ fontFamily: "monospace", textAlign: "center", color: "white", fontStyle: "italic" }}>Your donation Id : {donationId} </p>
+
+          {/* copy otp */}
+          <p style={{ textAlign: "center" }}>
+            <CopyToClipboard text={randomOtp}>
+              <span style={{ fontFamily: "monospace", cursor: "pointer", color: "white", display: "flex", alignItems: "center" }}>
+                Click here to Copy the OTP Please 🗍</span>
+            </CopyToClipboard>
+
+          </p>
+
+
+
+          {/* copy ends */}
+
+
+
           <input placeholder='Your name...' type='text' style={{ outline: "none", padding: 3, borderRadius: 3, border: "none" }}
             onChange={(e) => setName(e.target.value)} />
         </div>
 
-        <p style={{ fontFamily: "monospace", textAlign: "center", color: "wheat" }}>Select Amount to pay : </p>
+        <p style={{ fontFamily: "monospace", textAlign: "center", color: "wheat" }}>Select the Amount to pay : </p>
 
         {/* all amounts */}
         {
