@@ -5,6 +5,8 @@ import axios from "axios"
 const Donate = ({ onPayment }) => {
   const [amounts, setAmounts] = useState([])
   const [donationId, setDonationId] = useState("")
+  const [randomOtp, setRandomOtp] = useState("")
+
 
   const [donations, setAllDonations] = useState([])//db get all donations
 
@@ -28,6 +30,8 @@ const Donate = ({ onPayment }) => {
       .then(response => {
         setAmounts(response?.data?.amt)
         setDonationId(response?.data?.donationId)
+        setRandomOtp(response?.data?.randomNumber)
+
       })
       .catch(error => {
         console.log(error);
@@ -41,7 +45,7 @@ const Donate = ({ onPayment }) => {
 
   return (
     <div>
-      <p style={{ color: "white", textAlign: "center", fontWeight: "bold" }}>Please Donate! I AM HUNGRY!</p>
+      <p style={{ color: "white", textAlign: "center", fontWeight: "bold" }}>Please Donate ! I AM HUNGRY 🥲!</p>
 
       {/* img name did input amount */}
       <div style={{ border: "2px solid grey", padding: 11, borderRadius: 4 }}>
@@ -81,7 +85,7 @@ const Donate = ({ onPayment }) => {
 
       {/* all donations till now*/}
       <div style={{ textAlign: "center", border: "2px solid grey", padding: 5 }}>
-        <p style={{ color: "white", fontFamily: "monospace" }}>All Donations till now!</p>
+        <p style={{ color: "white", fontFamily: "monospace" }}>All Donations 💵💵💵 till now!</p>
 
         <div style={{ height: 250, background: "white", overflowY: "scroll", padding: 2 }}>
 
