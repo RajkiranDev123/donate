@@ -1,64 +1,66 @@
-import React from 'react'
+
 import { useEffect, useState } from 'react'
 import axios from "axios"
-
-
 
 const Donate = ({ onPayment }) => {
   const [amounts, setAmounts] = useState([])
   const [donationId, setDonationId] = useState("")
 
-  const [donations, setAllDonations] = useState([])
+  const [donations, setAllDonations] = useState([])//db get all donations
 
   const [name, setName] = useState("")
 
-  console.log(donations)
-
-  useEffect(() => {
-
-    axios.get(`${import.meta.env.VITE_B_URL}/api/amt/getAmounts`)
-      .then(response => {
-
-        setAmounts(response?.data?.amt)
-        setDonationId(response?.data?.donationId)
-
-      })
-      .catch(error => {
-
-        console.error('Error fetching data:', error);
-      });
-
-    //get all donations..
+  const getAllDonations = () => {
     axios.get(`${import.meta.env.VITE_B_URL}/api/donation/getAllDonations`)
-      .then(response => {
 
+      .then(response => {
         setAllDonations(response?.data?.donations)
       })
       .catch(error => {
-
-        console.error('Error fetching data:', error);
+        console.log(error);
       });
+  }
 
+  // get amounts
+  const getAmounts = () => {
+    axios.get(`${import.meta.env.VITE_B_URL}/api/amt/getAmounts`)
+
+      .then(response => {
+        setAmounts(response?.data?.amt)
+        setDonationId(response?.data?.donationId)
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }
+
+  useEffect(() => {
+    getAmounts()
+    getAllDonations()
   }, [])
+
   return (
     <div>
-      <p style={{ color: "white", textAlign: "center",fontWeight:"bold" }}>Please Donate! I AM HUNGRY!</p>
+      <p style={{ color: "white", textAlign: "center", fontWeight: "bold" }}>Please Donate! I AM HUNGRY!</p>
 
+      {/* img name did input amount */}
+      <div style={{ border: "2px solid grey", padding: 11, borderRadius: 4 }}>
 
-      <div>
-        <div>
+        <div style={{ textAlign: "center" }}>
           <img width={200} height={120} style={{ borderRadius: 5 }} src='/beg.png' alt='beg' />
         </div>
+
         <div style={{ textAlign: "center" }}>
           {name && <p style={{ color: "white", fontFamily: "arial" }}>hi, {name}</p>}
           <p style={{ color: "white", fontSize: 11, fontFamily: "monospace" }}>Name is must!</p>
           <p style={{ fontFamily: "monospace", textAlign: "center", color: "white", fontStyle: "italic" }}>Your donation Id : {donationId} </p>
-
-
-          <input placeholder='Your name...' type='text' style={{ outline: "none", padding: 3, borderRadius: 3, border: "none" }} onChange={(e) => setName(e.target.value)} />
+          <input placeholder='Your name...' type='text' style={{ outline: "none", padding: 3, borderRadius: 3, border: "none" }}
+            onChange={(e) => setName(e.target.value)} />
         </div>
+
         <p style={{ fontFamily: "monospace", textAlign: "center", color: "wheat" }}>Select Amount to pay : </p>
 
+        {/* all amounts */}
         {
           amounts && amounts.map(e => {
             return <>
@@ -72,12 +74,13 @@ const Donate = ({ onPayment }) => {
             </>
           })
         }
+        {/*  all amounts ended */}
 
       </div>
+      <br />
 
-
-      {/* all donations */}
-      <div style={{ textAlign: "center" }}>
+      {/* all donations till now*/}
+      <div style={{ textAlign: "center", border: "2px solid grey", padding: 5 }}>
         <p style={{ color: "white", fontFamily: "monospace" }}>All Donations till now!</p>
 
         <div style={{ height: 250, background: "white", overflowY: "scroll", padding: 2 }}>
@@ -85,8 +88,10 @@ const Donate = ({ onPayment }) => {
           {donations && donations?.map(e => {
             return (
               <>
-                <div style={{ display: "", justifyContent: "", lineHeight:0.1,fontFamily:"monospace",
-                  padding: 4, background: "#191970", color: "white", borderRadius: 4, margin: 1 }}>
+                <div style={{
+                  display: "", justifyContent: "", lineHeight: 0.1, fontFamily: "monospace",
+                  padding: 4, background: "#191970", color: "white", borderRadius: 4, margin: 1
+                }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <p>👷‍♂️ {e?.name}</p>
                     <p>💵 Rs.{e?.amount}</p>
@@ -96,20 +101,10 @@ const Donate = ({ onPayment }) => {
                     <p>Id: {e?.donationId}</p>
                     <p>▦ {e?.createdAt?.slice(0, 10)}</p>
                   </div>
-
-
-
-
-
-
-
                 </div>
 
               </>)
-
-
           })}
-
         </div>
       </div>
 
