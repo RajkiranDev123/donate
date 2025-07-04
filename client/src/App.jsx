@@ -7,10 +7,18 @@ import './App.css'
 
 function App() {
 
-  const sendFunToChild=(getAmounts, getAllDonations)=>{
-      getAllDonations()
-      getAmounts()
-  }
+
+
+  const [childFuns, setChildFuns] = useState({ one: null, two: null, three: null });
+
+  const sendFunToChild = (getAmounts, getAllDonations, clrName) => {
+    setChildFuns({
+      one: getAmounts,
+      two: getAllDonations,
+      three: clrName
+    });
+
+  };
 
 
   const loadScript = (src) => {
@@ -57,9 +65,14 @@ function App() {
           //only for db operation after payment success!
           await axios.post(`${import.meta.env.VITE_B_URL}/api/verifyPayment`, options2).then(res => {
 
-            if (res.data.success) {
+            if (res?.data?.success) {
               alert("Payment success!")
-              sendFunToChild()
+              childFuns.one()
+              childFuns.two()
+              childFuns.three()
+
+
+
 
             } else {
               alert("Payment failed!")

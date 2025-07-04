@@ -39,11 +39,16 @@ const Donate = ({ onPayment, sendFunToChild }) => {
       });
   }
 
-  sendFunToChild(getAmounts, getAllDonations)
+  const clrName=()=>{
+    setName("")
+  }
+
 
   useEffect(() => {
     getAmounts()
     getAllDonations()
+    sendFunToChild(getAmounts, getAllDonations,clrName)
+
   }, [])
 
   return (
@@ -77,7 +82,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
 
 
 
-          <input placeholder='Your name...' type='text' style={{ outline: "none", padding: 3, borderRadius: 3, border: "none" }}
+          <input value={name} placeholder='Your name...' type='text' style={{ outline: "none", padding: 3, borderRadius: 3, border: "none" }}
             onChange={(e) => setName(e.target.value)} />
         </div>
 
@@ -104,11 +109,11 @@ const Donate = ({ onPayment, sendFunToChild }) => {
 
       {/* all donations till now*/}
       <div style={{ textAlign: "center", border: "2px solid grey", padding: 5 }}>
-        <p style={{ color: "white", fontFamily: "monospace" }}>All Donations 💵💵💵 till now!</p>
+        <p style={{ color: "white", fontFamily: "monospace" }}>All Donations 💵 till now! ({donations&&donations?.length})</p>
 
         <div style={{ height: 250, background: "white", overflowY: "scroll", padding: 2 }}>
 
-          {donations && donations?.map(e => {
+          {donations && donations?.map((e,i) => {
             return (
               <>
                 <div style={{
@@ -116,7 +121,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
                   padding: 4, background: "#191970", color: "white", borderRadius: 4, margin: 1
                 }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p>👷‍♂️ {e?.name}</p>
+                    <p>{i+1}.👷‍♂️ {e?.name}</p>
                     <p>💵 Rs.{e?.amount}</p>
                   </div>
 
