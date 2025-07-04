@@ -39,7 +39,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
       });
   }
 
-  const clrName=()=>{
+  const clrName = () => {
     setName("")
   }
 
@@ -47,7 +47,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
   useEffect(() => {
     getAmounts()
     getAllDonations()
-    sendFunToChild(getAmounts, getAllDonations,clrName)
+    sendFunToChild(getAmounts, getAllDonations, clrName)
 
   }, [])
 
@@ -90,14 +90,14 @@ const Donate = ({ onPayment, sendFunToChild }) => {
 
         {/* all amounts */}
         {
-          amounts && amounts.map(e => {
+          amounts && amounts.map(m => {
             return <>
 
-              <span onClick={() => { name && onPayment(e, donationId, name) }}
+              <button onClick={() => { name && onPayment(m, donationId, name) }}
                 style={{
                   margin: 5, background: "blue", color: "white",
                   padding: 6, borderRadius: 3, cursor: name ? "pointer" : "not-allowed"
-                }}>Rs.{e}</span>
+                }}>Rs.{m}</button>
 
             </>
           })
@@ -109,11 +109,11 @@ const Donate = ({ onPayment, sendFunToChild }) => {
 
       {/* all donations till now*/}
       <div style={{ textAlign: "center", border: "2px solid grey", padding: 5 }}>
-        <p style={{ color: "white", fontFamily: "monospace" }}>All Donations 💵 till now! ({donations&&donations?.length})</p>
+        <p style={{ color: "white", fontFamily: "monospace" }}>All Donations 💵 till now! ({donations && donations?.length})</p>
 
         <div style={{ height: 250, background: "white", overflowY: "scroll", padding: 2 }}>
 
-          {donations && donations?.map((e,i) => {
+          {donations && donations?.map((e, i) => {
             return (
               <>
                 <div style={{
@@ -121,7 +121,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
                   padding: 4, background: "#191970", color: "white", borderRadius: 4, margin: 1
                 }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <p>{i+1}.👷‍♂️ {e?.name}</p>
+                    <p>{i + 1}.👷‍♂️ {e?.name}</p>
                     <p>💵 Rs.{e?.amount}</p>
                   </div>
 
