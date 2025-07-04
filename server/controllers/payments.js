@@ -11,8 +11,7 @@ export const createOrder = (req, res) => {
 
     const { donation_id, amount } = req.body
 
-    //db
-    // use order_id or product_id or donation_id to fetch amount from db based on it
+    //db call : use order_id or product_id or donation_id to fetch amount from db based on it
 
     const options = {
         amount: amount * 100,
