@@ -50,6 +50,8 @@ function App() {
 
         //after success handler is called!
         handler: async function (res) {
+
+
           const options2 = {
             // for generating signature
             order_id: res?.razorpay_order_id,
@@ -70,9 +72,6 @@ function App() {
               childFuns.one()
               childFuns.two()
               childFuns.three()
-
-
-
 
             } else {
               alert("Payment failed!")
