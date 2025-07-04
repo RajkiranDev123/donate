@@ -42,7 +42,7 @@ const Donate = ({ onPayment }) => {
   }, [])
   return (
     <div>
-      <p style={{ color: "white", textAlign: "center" }}>Please Donate! I AM HUNGRY!</p>
+      <p style={{ color: "white", textAlign: "center",fontWeight:"bold" }}>Please Donate! I AM HUNGRY!</p>
 
 
       <div>
@@ -86,7 +86,7 @@ const Donate = ({ onPayment }) => {
             return (
               <>
                 <div style={{ display: "", justifyContent: "", lineHeight:0.1,fontFamily:"monospace",
-                  padding: 4, background: "black", color: "white", borderRadius: 4, margin: 1 }}>
+                  padding: 4, background: "#191970", color: "white", borderRadius: 4, margin: 1 }}>
                   <div style={{ display: "flex", justifyContent: "space-between" }}>
                     <p>👷‍♂️ {e?.name}</p>
                     <p>💵 Rs.{e?.amount}</p>
