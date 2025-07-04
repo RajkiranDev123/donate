@@ -7,6 +7,12 @@ import './App.css'
 
 function App() {
 
+  const sendFunToChild=(getAmounts, getAllDonations)=>{
+      getAllDonations()
+      getAmounts()
+  }
+
+
   const loadScript = (src) => {
     return new Promise((resolve) => {
       const script = document.createElement("script")
@@ -53,6 +59,8 @@ function App() {
 
             if (res.data.success) {
               alert("Payment success!")
+              sendFunToChild()
+
             } else {
               alert("Payment failed!")
             }
@@ -64,6 +72,7 @@ function App() {
       })
 
       paymentObject.open()
+
     } catch (error) {
       console.log(error)
     }
@@ -81,7 +90,7 @@ function App() {
           background: "linear-gradient(to right, #283048, #859398)", width: "100vw", height: "100vh", display: "flex",
           justifyContent: "center", alignItems: ""
         }} >
-        <Donate onPayment={onPayment} />
+        <Donate onPayment={onPayment} sendFunToChild={sendFunToChild} />
 
 
       </div>

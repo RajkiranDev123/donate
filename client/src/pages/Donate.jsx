@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react'
 import axios from "axios"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 
-const Donate = ({ onPayment }) => {
+const Donate = ({ onPayment, sendFunToChild }) => {
   const [amounts, setAmounts] = useState([])
   const [donationId, setDonationId] = useState("")
   const [randomOtp, setRandomOtp] = useState("")
@@ -38,6 +38,8 @@ const Donate = ({ onPayment }) => {
         console.log(error);
       });
   }
+
+  sendFunToChild(getAmounts, getAllDonations)
 
   useEffect(() => {
     getAmounts()
