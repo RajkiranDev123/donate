@@ -2,6 +2,7 @@
 import { useEffect, useState } from 'react'
 import axios from "axios"
 import { CopyToClipboard } from 'react-copy-to-clipboard';
+import "./loader.css"
 
 const Donate = ({ onPayment, sendFunToChild }) => {
   const [amounts, setAmounts] = useState([])
@@ -112,6 +113,9 @@ const Donate = ({ onPayment, sendFunToChild }) => {
         <p style={{ color: "white", fontFamily: "monospace" }}>All Donations 💵 till now! ({donations && donations?.length})</p>
 
         <div style={{ height: 250, background: "white", overflowY: "scroll", padding: 2 }}>
+
+
+          {!donations.length > 0 &&<div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:5}} ><div className="loader"></div></div> }
 
           {donations && donations?.map((e, i) => {
             return (

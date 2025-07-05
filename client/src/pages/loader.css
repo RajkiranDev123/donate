@@ -1,0 +1,14 @@
+
+.loader {
+  width: 120px;
+  height: 20px;
+  border-radius: 3px;
+  -webkit-mask:linear-gradient(90deg,#a61e1e 70%,#5d040400 0) 0/20%;
+  background:
+   linear-gradient(#480505 0 0) 0/0% no-repeat
+   #ddd;
+  animation: l4 2s infinite steps(6);
+}
+@keyframes l4 {
+    100% {background-size:120%}
+}
