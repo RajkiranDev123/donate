@@ -66,7 +66,20 @@ const Donate = ({ onPayment, sendFunToChild }) => {
         <div style={{ textAlign: "center" }}>
           {name && <p style={{ color: "white", fontFamily: "arial" }}>hi, {name}</p>}
           <p style={{ color: "white", fontSize: 11, fontFamily: "monospace" }}>Name is must!</p>
-          <p style={{ fontFamily: "monospace", textAlign: "center", color: "white", fontStyle: "italic" }}>Your donation Id : {donationId} </p>
+          <p style={{ fontFamily: "monospace", textAlign: "center", color: "white", fontStyle: "italic" }}>Your donation Id :
+
+
+            {donationId ? donationId :
+
+              <span style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 5 }} ><div className="loader"></div></span>
+
+
+            }
+
+
+          </p>
+
+
 
           {/* copy otp */}
           <p style={{ textAlign: "center" }}>
@@ -102,7 +115,10 @@ const Donate = ({ onPayment, sendFunToChild }) => {
 
             </>
           })
+
         }
+        {!amounts?.length > 0 && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 5 }} ><div className="loader"></div></div>}
+
         {/*  all amounts ended */}
 
       </div>
@@ -115,7 +131,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
         <div style={{ height: 250, background: "white", overflowY: "scroll", padding: 2 }}>
 
 
-          {!donations.length > 0 &&<div style={{display:"flex",justifyContent:"center",alignItems:"center",marginTop:5}} ><div className="loader"></div></div> }
+          {!donations.length > 0 && <div style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 5 }} ><div className="loader"></div></div>}
 
           {donations && donations?.map((e, i) => {
             return (
@@ -143,7 +159,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
 
 
 
-    </div>
+    </div >
   )
 }
 
