@@ -71,7 +71,7 @@ const Donate = ({ onPayment, sendFunToChild }) => {
 
             {donationId ? donationId :
 
-              <span style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 5 }} ><div className="loader"></div></span>
+              <span style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: 5 }} ><p className="loader"></p></span>
 
 
             }
